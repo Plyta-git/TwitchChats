@@ -15,9 +15,11 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   const channelEmotes = useFetchToChannelEmotes(targetChannel);
 
   useEffect(() => {
-    setEmotes(Object.values(globalEmotes).flat());
-    console.log(channelEmotes);
-  }, [globalEmotes]);
+    if (!channelEmotes) {
+      return;
+    }
+    setEmotes(Object.values(channelEmotes).flat());
+  }, [channelEmotes]);
 
   useEffect(() => {
     setBadges(globalbadges);
