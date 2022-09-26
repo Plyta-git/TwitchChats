@@ -1,46 +1,35 @@
-import { useEffect, useState } from "react";
-import connectToChat from "./connectToChat";
-import StyledNickname from "./StyledWraper";
-
-let globalIcons;
-
-async function getGlobabIcons() {
-  const globalIconsURL = "https://badges.twitch.tv/v1/badges/global/display";
-  const request = new Request(globalIconsURL);
-  const response = await fetch(request);
-  globalIcons = await response.json();
-  const testEmote = globalIcons.badge_sets.partner.versions[1].image_url_1x;
-}
+import useFetchToEmotes from "./hooks/useFetchToBadges";
+import ChatBox from "./components/ChatBox/ChatBox";
+import styled from "styled-components";
+import { useState } from "react";
+import useFetchToGlobalEmotes from "./hooks/useFetchToGlobalEmotes";
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+`;
 
 const App = () => {
-  const [chatMessages, setChatMesseges] = useState([]);
-  useEffect(() => {
-    getGlobabIcons();
-    connectToChat("xqc", setChatMesseges);
-  }, []);
+  const [globalbadges, globalBadgesError, globalBadgesLoading] =
+    useFetchToEmotes();
+  const [channels, setChannels] = useState(["plyta__", "xqc"]);
 
+  const globalEmotes = useFetchToGlobalEmotes();
+
+  if (globalBadgesError) return <Wrapper>Error</Wrapper>;
+  if (globalBadgesLoading) return <Wrapper>loading...</Wrapper>;
   return (
-    <div>
-      {chatMessages.map(({ message, tags }) => (
-        <>
-          <StyledNickname color={tags.color}>
-            {tags.badges
-              ? Object.keys(tags.badges).map(function (key) {
-                  return (
-                    <img
-                      alt={globalIcons.badge_sets[key].versions[1].description}
-                      src={globalIcons.badge_sets[key].versions[1].image_url_1x}
-                    />
-                  );
-                })
-              : null}
-
-            {`${tags["display-name"]}: `}
-          </StyledNickname>
-          <div>{message}</div>
-        </>
+    <Wrapper>
+      {channels.map((channel) => (
+        <ChatBox
+          key={channel}
+          targetChannel={channel}
+          globalbadges={globalbadges}
+          globalEmotes={globalEmotes}
+        ></ChatBox>
       ))}
-    </div>
+    </Wrapper>
   );
 };
 
