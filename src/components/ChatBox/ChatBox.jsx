@@ -4,6 +4,7 @@ import useFetchToChat from "../../hooks/useFetchToChat";
 import { ChannelName, Wrapper } from "./Styled";
 import { defaultChatBoxSetting } from "../../config/config";
 import useFetchToChannelEmotes from "../../hooks/useFetchToChannelEmotes";
+import { filtrEmotes } from "./filtrEmotes";
 
 const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   const bottomRef = useRef(null);
@@ -15,11 +16,8 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   const channelEmotes = useFetchToChannelEmotes(targetChannel);
 
   useEffect(() => {
-    if (!channelEmotes) {
-      return;
-    }
-    setEmotes(Object.values(channelEmotes).flat());
-  }, [channelEmotes]);
+    setEmotes(filtrEmotes(channelEmotes, globalEmotes, chatboxSetting));
+  }, [channelEmotes, globalEmotes, chatboxSetting]);
 
   useEffect(() => {
     setBadges(globalbadges);

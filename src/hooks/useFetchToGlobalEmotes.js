@@ -1,29 +1,29 @@
 import { useState, useEffect } from "react";
 
 const useFetchToGlobalEmotes = () => {
-  const [ttvGlobalEmotes, setGlobalTtvEmotes] = useState([]);
-  const [seventvGlobalEmotes, setGlobalSeventvEmotes] = useState([]);
-  const [bttvGlobalEmotes, setGlobalBttvEmotes] = useState();
-  const [ffzGlobalEmotes, setGlobalFfzEmotes] = useState();
+  const [ttvGlobalEmotes, setGlobalTtvEmotes] = useState(new Map());
+  const [seventvGlobalEmotes, setGlobalSeventvEmotes] = useState(new Map());
+  const [bttvGlobalEmotes, setGlobalBttvEmotes] = useState(new Map());
+  const [ffzGlobalEmotes, setGlobalFfzEmotes] = useState(new Map());
 
   const setEmotesToStates = (response) => {
-    const ttv = [];
-    const sevenTV = [];
-    const bttv = [];
-    const ffz = [];
+    const ttv = new Map();
+    const sevenTV = new Map();
+    const bttv = new Map();
+    const ffz = new Map();
     response.forEach((el) => {
       switch (el.provider) {
         case 0:
-          ttv.push(el);
+          ttv.set(el.code, el.urls);
           break;
         case 1:
-          sevenTV.push(el);
+          sevenTV.set(el.code, el.urls);
           break;
         case 2:
-          bttv.push(el);
+          bttv.set(el.code, el.urls);
           break;
         case 3:
-          ffz.push(el);
+          ffz.set(el.code, el.urls);
           break;
         default:
           break;
