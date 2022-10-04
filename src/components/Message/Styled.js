@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  margin: 7px;
+  margin-top: 10px;
   color: ${({ color }) => color || "white"};
 `;
 

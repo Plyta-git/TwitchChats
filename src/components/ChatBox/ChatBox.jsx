@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Message from "../Message/Message";
 import useFetchToChat from "../../hooks/useFetchToChat";
-import { ChannelName, Wrapper } from "./Styled";
+import { ChannelName, Wrapper, MessageWrapper } from "./Styled";
 import { defaultChatBoxSetting } from "../../config/config";
 import useFetchToChannelEmotes from "../../hooks/useFetchToChannelEmotes";
 import { filtrEmotes } from "./filtrEmotes";
+import SideBar from "../SideBar/SideBar";
 
 const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   const bottomRef = useRef(null);
@@ -42,20 +43,22 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   }, [ChatMessages]);
 
   return (
-    <Wrapper onWheel={onWheel} ref={bottomRef}>
-      <ChannelName>Kanał: {targetChannel}</ChannelName>
-      {ChatMessages.map(({ message, tags, username }) => {
-        return (
-          <Message
-            key={tags.id}
-            badgesSet={badgesSet}
-            emotes={emotes}
-            tags={tags}
-            username={username}
-            message={message}
-          />
-        );
-      })}
+    <Wrapper>
+      <MessageWrapper onWheel={onWheel} ref={bottomRef}>
+        {ChatMessages.map(({ message, tags, username }) => {
+          return (
+            <Message
+              key={tags.id}
+              badgesSet={badgesSet}
+              emotes={emotes}
+              tags={tags}
+              username={username}
+              message={message}
+            />
+          );
+        })}
+      </MessageWrapper>
+      <SideBar />
     </Wrapper>
   );
 };

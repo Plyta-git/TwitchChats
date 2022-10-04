@@ -2,10 +2,7 @@ export const filtrEmotes = (channelEmotes, globalEmotes, chatboxSetting) => {
   let mergedBttv = new Map([]);
   let mergedFfz = new Map([]);
   let mergedseventv = new Map([]);
-  const mergedttv = new Map([
-    ...globalEmotes.ttvGlobalEmotes,
-    ...channelEmotes.ttvChannelEmotes,
-  ]);
+  const mergedttv = new Map([...globalEmotes.ttvGlobalEmotes]);
 
   if (chatboxSetting.bttvEmotes) {
     mergedBttv = new Map([

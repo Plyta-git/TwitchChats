@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 24px;
     color: #f8f8f8;
     font-family: Open-Sans, Helvetica, Sans-Serif;
-    background: linear-gradient(107.56deg, #282934 0%, #05060E 100%);
+    background: #18181B;
   }
   *,*::before,*::after{ 
     box-sizing:border-box; 

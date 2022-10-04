@@ -3,35 +3,31 @@ import useReplaceEmote from "../../hooks/useReplaceEmote";
 import { Wrapper, Icon, ColorMessage } from "./Styled";
 
 const Message = ({
-  tags: { badges, color, username },
+  tags: { badges, color, username, emotes: ttvEmotes },
   message,
   badgesSet: { badge_sets },
   emotes,
 }) => {
-  message = useReplaceEmote(message, emotes);
+  message = useReplaceEmote(message, emotes, ttvEmotes);
   return (
     <Wrapper color={color}>
       {badges
         ? Object.keys(badges).map(function (key) {
+            let badge;
             if (key === "predictions") {
-              const badge = badge_sets[key].versions[badges.predictions];
+              badge = badge_sets[key].versions[badges.predictions];
+            } else badge = badge_sets[key].versions[1];
+            if (badge) {
               return (
                 <Icon
-                  key={badge.description}
-                  alt={badge.description}
+                  key={badge.title}
+                  alt={badge.title}
                   src={badge.image_url_1x}
                 />
               );
+            } else {
+              return "";
             }
-
-            const badge = badge_sets[key].versions[1];
-            return (
-              <Icon
-                key={badge.description}
-                alt={badge.description}
-                src={badge.image_url_1x}
-              />
-            );
           })
         : null}
       {`${username}`}
