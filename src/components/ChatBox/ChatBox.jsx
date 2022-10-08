@@ -6,12 +6,20 @@ import { defaultChatBoxSetting } from "../../config/config";
 import useFetchToChannelEmotes from "../../hooks/useFetchToChannelEmotes";
 import { filtrEmotes } from "./filtrEmotes";
 import SideBar from "../SideBar/SideBar";
+import ChatStatBox from "../ChatStatBox/ChatStatBox";
 
 const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   const bottomRef = useRef(null);
   const [chatboxSetting, setChatboxSettings] = useState(defaultChatBoxSetting);
   const [isAutoScrolling, setAutoScrlling] = useState(true);
   const [emotes, setEmotes] = useState([]);
+
+
+
+  const [isStatsBoxOpen, setisStatsBoxOpen] = useState(false);
+
+
+
   const [badgesSet, setBadges] = useState([]);
   const ChatMessages = useFetchToChat(targetChannel);
   const channelEmotes = useFetchToChannelEmotes(targetChannel);
@@ -38,29 +46,43 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   useEffect(() => {
     if (ChatMessages.length > chatboxSetting.maxMessages)
       ChatMessages.splice(0, 1);
-    if (isAutoScrolling)
+    if (!isStatsBoxOpen && isAutoScrolling)
       bottomRef.current.scrollTop = bottomRef.current?.scrollHeight;
   }, [ChatMessages]);
 
-  return (
-    <Wrapper>
-      <MessageWrapper onWheel={onWheel} ref={bottomRef}>
-        {ChatMessages.map(({ message, tags, username }) => {
-          return (
-            <Message
-              key={tags.id}
-              badgesSet={badgesSet}
-              emotes={emotes}
-              tags={tags}
-              username={username}
-              message={message}
-            />
-          );
-        })}
-      </MessageWrapper>
-      <SideBar />
-    </Wrapper>
-  );
+  if (!isStatsBoxOpen)
+    return (
+      <Wrapper>
+        <MessageWrapper onWheel={onWheel} ref={bottomRef}>
+          {ChatMessages.map(({ message, tags, username }) => {
+            return (
+              <Message
+                key={tags.id}
+                badgesSet={badgesSet}
+                emotes={emotes}
+                tags={tags}
+                username={username}
+                message={message}
+              />
+            );
+          })}
+        </MessageWrapper>
+        <SideBar
+          setisStatsBoxOpen={setisStatsBoxOpen}
+          isStatsBoxOpen={isStatsBoxOpen}
+        />
+      </Wrapper>
+    );
+  else
+    return (
+      <Wrapper>
+        <ChatStatBox />
+        <SideBar
+          setisStatsBoxOpen={setisStatsBoxOpen}
+          isStatsBoxOpen={isStatsBoxOpen}
+        />
+      </Wrapper>
+    );
 };
 
 export default ChatBox;

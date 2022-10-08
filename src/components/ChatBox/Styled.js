@@ -36,7 +36,6 @@ export const Wrapper = styled.div`
 
 export const ChannelName = styled.div`
   background-color: #000000cd;
-  padding: 10px;
   position: sticky;
   top: 0;
 `;

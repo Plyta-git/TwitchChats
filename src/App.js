@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 const App = () => {
   const [globalbadges, globalBadgesError, globalBadgesLoading] =
     useFetchToEmotes();
-  const [channels, setChannels] = useState(["youngmulti"]);
+  const [channels, setChannels] = useState(["veibae"]);
 
   const globalEmotes = useFetchToGlobalEmotes();
 

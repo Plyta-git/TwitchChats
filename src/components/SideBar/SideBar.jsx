@@ -1,9 +1,11 @@
 import { Wrapper, CloseButton } from "./Styled.js";
 
-const SideBar = () => {
+const SideBar = ({ setisStatsBoxOpen, isStatsBoxOpen }) => {
   return (
     <Wrapper>
-      <CloseButton>&#8249;</CloseButton>
+      <button onClick={() => setisStatsBoxOpen(!isStatsBoxOpen)}>
+        &#8249;
+      </button>
     </Wrapper>
   );
 };
