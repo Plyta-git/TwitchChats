@@ -1,11 +1,17 @@
-import { Wrapper, CloseButton } from "./Styled.js";
+import { Wrapper, CloseButton, Button } from "./Styled.js";
 
-const SideBar = ({ setisStatsBoxOpen, isStatsBoxOpen }) => {
+const SideBar = ({
+  setisStatsBoxOpen,
+  isStatsBoxOpen,
+  removeCard,
+  targetChannel,
+}) => {
   return (
     <Wrapper>
-      <button onClick={() => setisStatsBoxOpen(!isStatsBoxOpen)}>
+      <CloseButton onClick={() => removeCard(targetChannel)} />
+      <Button onClick={() => setisStatsBoxOpen(!isStatsBoxOpen)}>
         &#8249;
-      </button>
+      </Button>
     </Wrapper>
   );
 };

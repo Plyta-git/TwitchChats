@@ -4,12 +4,10 @@ import { Wrapper, Icon, ColorMessage } from "./Styled";
 
 const Message = ({
   tags: { badges, color, username, emotes: ttvEmotes },
-  tags,
   message,
   badgesSet: { badge_sets },
   emotes,
 }) => {
-  console.log(tags);
   message = useReplaceEmote(message, emotes, ttvEmotes);
   return (
     <Wrapper color={color}>

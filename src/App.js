@@ -3,6 +3,8 @@ import ChatBox from "./components/ChatBox/ChatBox";
 import styled from "styled-components";
 import { useState } from "react";
 import useFetchToGlobalEmotes from "./hooks/useFetchToGlobalEmotes";
+import AddUser from "./components/AddUser";
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -13,7 +15,14 @@ const Wrapper = styled.div`
 const App = () => {
   const [globalbadges, globalBadgesError, globalBadgesLoading] =
     useFetchToEmotes();
-  const [channels, setChannels] = useState(["h2p_gucio"]);
+  const [channels, setChannels] = useState(["h2p_gucio", "xqc", "xnzq"]);
+
+  const removeCard = (id) => {
+    const newChannels = channels.filter((name) => {
+      return name != id;
+    });
+    setChannels(newChannels);
+  };
 
   const globalEmotes = useFetchToGlobalEmotes();
 
@@ -21,8 +30,10 @@ const App = () => {
   if (globalBadgesLoading) return <Wrapper>loading...</Wrapper>;
   return (
     <Wrapper>
+      <AddUser />
       {channels.map((channel) => (
         <ChatBox
+          removeCard={removeCard}
           key={channel}
           targetChannel={channel}
           globalbadges={globalbadges}

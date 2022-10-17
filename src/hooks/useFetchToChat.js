@@ -24,9 +24,6 @@ const useFetchToChat = (targetChannel) => {
     },
   });
   useEffect(() => {
-    console.log(chatStats);
-  }, [chatStats]);
-  useEffect(() => {
     client.connect().catch(console.error);
     client.on("message", (channel, tags, message, self) => {
       tags.username = tags["display-name"];

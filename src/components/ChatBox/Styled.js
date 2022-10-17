@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MessageWrapper = styled.div`
   width: 100%;
-
+  margin-top: 15px;
   font-size: 14px;
   overflow-x: hidden;
 
@@ -23,6 +23,8 @@ export const MessageWrapper = styled.div`
     background-color: #4d4949;
   }
 `;
+
+
 
 export const Wrapper = styled.div`
   display: flex;

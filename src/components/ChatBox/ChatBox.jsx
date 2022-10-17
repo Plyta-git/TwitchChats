@@ -8,7 +8,7 @@ import { filtrEmotes } from "./filtrEmotes";
 import SideBar from "../SideBar/SideBar";
 import ChatStatBox from "../ChatStatBox/ChatStatBox";
 
-const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
+const ChatBox = ({ globalbadges, targetChannel, globalEmotes, removeCard }) => {
   const bottomRef = useRef(null);
   const [chatboxSetting, setChatboxSettings] = useState(defaultChatBoxSetting);
   const [isAutoScrolling, setAutoScrlling] = useState(true);
@@ -46,8 +46,36 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
       bottomRef.current.scrollTop = bottomRef.current?.scrollHeight;
   }, [ChatMessages]);
 
-  if (loadingState == "connecting...") return <Wrapper>Loading...</Wrapper>;
-  if (loadingState == "disconnected") return <Wrapper>Disconnected</Wrapper>;
+  if (loadingState == "loading")
+    return (
+      <Wrapper>
+        <MessageWrapper onWheel={onWheel} ref={bottomRef}>
+          Loading {targetChannel} channel
+        </MessageWrapper>
+        <ChannelName targetChannel={targetChannel} />
+        <SideBar
+          removeCard={removeCard}
+          targetChannel={targetChannel}
+          setisStatsBoxOpen={setisStatsBoxOpen}
+          isStatsBoxOpen={isStatsBoxOpen}
+        />
+      </Wrapper>
+    );
+  if (loadingState == "disconnected")
+    return (
+      <Wrapper>
+        <MessageWrapper onWheel={onWheel} ref={bottomRef}>
+          Disconnected
+        </MessageWrapper>
+        <ChannelName targetChannel={targetChannel} />
+        <SideBar
+          removeCard={removeCard}
+          targetChannel={targetChannel}
+          setisStatsBoxOpen={setisStatsBoxOpen}
+          isStatsBoxOpen={isStatsBoxOpen}
+        />
+      </Wrapper>
+    );
   if (!isStatsBoxOpen)
     return (
       <Wrapper>
@@ -67,12 +95,13 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
           })}
         </MessageWrapper>
         <SideBar
+          removeCard={removeCard}
+          targetChannel={targetChannel}
           setisStatsBoxOpen={setisStatsBoxOpen}
           isStatsBoxOpen={isStatsBoxOpen}
         />
       </Wrapper>
     );
-
   else
     return (
       <Wrapper>
