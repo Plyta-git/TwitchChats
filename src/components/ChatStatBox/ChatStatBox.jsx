@@ -1,11 +1,11 @@
 import { Wrapper } from "./Styled";
 
-const ChatStatBox = () => {
+const ChatStatBox = ({ ChatStats: { bans, to, subs }, setChatboxSettings }) => {
   return (
     <Wrapper>
-      <div>Messages: 20</div>
-      <div>Messages: 20</div>
-      <div>Messages: 20</div>
+      <div>Bans: {bans}</div>
+      <div>Timeouts: {to}</div>
+      <div>Subs: {subs}</div>
     </Wrapper>
   );
 };

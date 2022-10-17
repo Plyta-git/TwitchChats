@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 const App = () => {
   const [globalbadges, globalBadgesError, globalBadgesLoading] =
     useFetchToEmotes();
-  const [channels, setChannels] = useState(["veibae"]);
+  const [channels, setChannels] = useState(["h2p_gucio"]);
 
   const globalEmotes = useFetchToGlobalEmotes();
 

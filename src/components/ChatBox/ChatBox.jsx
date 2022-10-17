@@ -14,14 +14,10 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   const [isAutoScrolling, setAutoScrlling] = useState(true);
   const [emotes, setEmotes] = useState([]);
 
-
-
   const [isStatsBoxOpen, setisStatsBoxOpen] = useState(false);
 
-
-
   const [badgesSet, setBadges] = useState([]);
-  const ChatMessages = useFetchToChat(targetChannel);
+  const [ChatMessages, ChatStats, loadingState] = useFetchToChat(targetChannel);
   const channelEmotes = useFetchToChannelEmotes(targetChannel);
 
   useEffect(() => {
@@ -37,7 +33,7 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
       setAutoScrlling(false);
     } else if (
       bottomRef.current.scrollTop / bottomRef.current.scrollHeight >
-      0.6
+      0.5
     ) {
       setAutoScrlling(true);
     }
@@ -53,6 +49,7 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   if (!isStatsBoxOpen)
     return (
       <Wrapper>
+        <ChannelName targetChannel={targetChannel} />
         <MessageWrapper onWheel={onWheel} ref={bottomRef}>
           {ChatMessages.map(({ message, tags, username }) => {
             return (
@@ -76,7 +73,12 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   else
     return (
       <Wrapper>
-        <ChatStatBox />
+        <ChannelName targetChannel={targetChannel} />
+
+        <ChatStatBox
+          ChatStats={ChatStats}
+          setChatboxSettings={setChatboxSettings}
+        />
         <SideBar
           setisStatsBoxOpen={setisStatsBoxOpen}
           isStatsBoxOpen={isStatsBoxOpen}

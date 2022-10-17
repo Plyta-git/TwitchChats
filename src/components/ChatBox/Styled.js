@@ -35,8 +35,31 @@ export const Wrapper = styled.div`
 `;
 
 export const ChannelName = styled.div`
-  background-color: #000000cd;
-  position: sticky;
-  top: 0;
+  position: absolute;
+  &:before {
+    font-size: 20px;
+    padding: 5px 12px;
+    border-radius: 25px;
+    left: -15px;
+    top: -15px;
+    height: 20px;
+    background-color: white;
+    color: black;
+    position: relative;
+    content: "${(props) => props.targetChannel}";
+  }
+
+  /* &:after {
+    content: url(https://static-cdn.jtvnw.net/jtv_user_pictures/6ac9f43f-9b74-4050-8432-9c3b9970f8bf-profile_image-70x70.png);
+    content: url(https://static-cdn.jtvnw.net/jtv_user_pictures/xqc-profile_image-9298dca608632101-70x70.jpeg);
+    overflow: hidden;
+    border: 5px solid white;
+    top: -25px;
+    left: -25px;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+  } */
 `;
 
