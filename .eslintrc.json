@@ -1,5 +1,5 @@
 {
   "rules": {
-    "max-len": ["warning", 160]
+    "max-len": ["warn", 160]
   }
 }

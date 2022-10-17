@@ -42,10 +42,12 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
   useEffect(() => {
     if (ChatMessages.length > chatboxSetting.maxMessages)
       ChatMessages.splice(0, 1);
-    if (!isStatsBoxOpen && isAutoScrolling)
+    if (!isStatsBoxOpen && isAutoScrolling && loadingState == "connected")
       bottomRef.current.scrollTop = bottomRef.current?.scrollHeight;
   }, [ChatMessages]);
 
+  if (loadingState == "connecting...") return <Wrapper>Loading...</Wrapper>;
+  if (loadingState == "disconnected") return <Wrapper>Disconnected</Wrapper>;
   if (!isStatsBoxOpen)
     return (
       <Wrapper>
@@ -70,6 +72,7 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes }) => {
         />
       </Wrapper>
     );
+
   else
     return (
       <Wrapper>
