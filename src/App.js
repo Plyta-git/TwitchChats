@@ -12,10 +12,26 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
+
 const App = () => {
   const [globalbadges, globalBadgesError, globalBadgesLoading] =
     useFetchToEmotes();
   const [channels, setChannels] = useState(["h2p_gucio", "xqc", "xnzq"]);
+  const [newChannel, setNewChannel] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (channels.some((channel) => channel === newChannel)) {
+      alert("This channel exist");
+    } else {
+      setChannels([...channels, newChannel]);
+    }
+    setNewChannel("");
+  }
+
+  function handleTextareaChange(e) {
+    setNewChannel(e.target.value);
+  }
 
   const removeCard = (id) => {
     const newChannels = channels.filter((name) => {
@@ -30,7 +46,11 @@ const App = () => {
   if (globalBadgesLoading) return <Wrapper>loading...</Wrapper>;
   return (
     <Wrapper>
-      <AddUser />
+      <AddUser
+        handleSubmit={handleSubmit}
+        newChannel={newChannel}
+        handleTextareaChange={handleTextareaChange}
+      />
       {channels.map((channel) => (
         <ChatBox
           removeCard={removeCard}

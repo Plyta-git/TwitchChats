@@ -47,12 +47,15 @@ const Flex = styled.div`
   flex-direction: column;
 `;
 
-const AddUser = () => {
+const AddUser = ({ handleSubmit, handleTextareaChange, newChannel }) => {
   return (
     <Wrapper>
       <Flex>
-        <input></input>
-        <Button>ADD USER</Button>
+        <form onSubmit={handleSubmit}>
+          <input value={newChannel} onChange={handleTextareaChange} />
+          <br />
+          <Button>ADD USER</Button>
+        </form>
       </Flex>
     </Wrapper>
   );
