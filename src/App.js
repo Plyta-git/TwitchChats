@@ -9,14 +9,15 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   height: 100vh;
+  padding-top: 100px;
 `;
-
 
 const App = () => {
   const [globalbadges, globalBadgesError, globalBadgesLoading] =
     useFetchToEmotes();
-  const [channels, setChannels] = useState(["h2p_gucio", "xqc", "xnzq"]);
+  const [channels, setChannels] = useState(["sodapoppin", "xqc"]);
   const [newChannel, setNewChannel] = useState("");
 
   async function handleSubmit(e) {
@@ -30,7 +31,7 @@ const App = () => {
   }
 
   function handleTextareaChange(e) {
-    setNewChannel(e.target.value);
+    setNewChannel(e.target.value.toLowerCase());
   }
 
   const removeCard = (id) => {

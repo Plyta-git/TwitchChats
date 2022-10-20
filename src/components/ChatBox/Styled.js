@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MessageWrapper = styled.div`
   width: 100%;
-  margin-top: 15px;
+  margin: 15px 0px 5px 5px;
   font-size: 14px;
   overflow-x: hidden;
 
@@ -24,14 +24,15 @@ export const MessageWrapper = styled.div`
   }
 `;
 
-
-
 export const Wrapper = styled.div`
+  margin: 20px;
   display: flex;
   width: 340px;
+  min-width: 340px;
   height: 500px;
+  min-height: 500px;
   background-color: #18181b;
-  border: 2px solid white;
+  border: 2px solid #f8f8f8;
   overflow: auto;
   border-radius: 5px;
 `;
@@ -45,8 +46,8 @@ export const ChannelName = styled.div`
     left: -15px;
     top: -15px;
     height: 20px;
-    background-color: white;
-    color: black;
+    background-color: #f8f8f8;
+    color: #18181b;
     position: relative;
     content: "${(props) => props.targetChannel}";
   }

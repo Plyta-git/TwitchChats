@@ -20,6 +20,10 @@ const ChatBox = ({ globalbadges, targetChannel, globalEmotes, removeCard }) => {
   const [ChatMessages, ChatStats, loadingState] = useFetchToChat(targetChannel);
   const channelEmotes = useFetchToChannelEmotes(targetChannel);
 
+
+  useEffect(() => {
+    setAutoScrlling(true);
+  }, [isStatsBoxOpen]);
   useEffect(() => {
     setEmotes(filtrEmotes(channelEmotes, globalEmotes, chatboxSetting));
   }, [channelEmotes, globalEmotes, chatboxSetting]);

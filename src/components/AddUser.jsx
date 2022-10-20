@@ -54,7 +54,7 @@ const AddUser = ({ handleSubmit, handleTextareaChange, newChannel }) => {
         <form onSubmit={handleSubmit}>
           <input value={newChannel} onChange={handleTextareaChange} />
           <br />
-          <Button>ADD USER</Button>
+          <Button>ADD CHANNEL</Button>
         </form>
       </Flex>
     </Wrapper>

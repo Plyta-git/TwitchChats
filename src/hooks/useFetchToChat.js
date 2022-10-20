@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const debug = false;
 
 const useFetchToChat = (targetChannel) => {
+  const spamers = new Map();
   const [chatStats, setChatStats] = useState({
     bans: 0,
     to: 0,
@@ -10,8 +11,11 @@ const useFetchToChat = (targetChannel) => {
     messages: 0,
     subGift: 0,
     resub: 0,
-    mods: 0,
-    vips: 0,
+    streamerMentions: 0,
+    topSpamer: "",
+    topSpamerMessages: 0,
+    chatters: 0,
+    streamerMention: 0,
   });
   const [loadingState, setLoadingState] = useState("loading");
   const [chatMessages, setChatMesseges] = useState([]);
@@ -25,10 +29,51 @@ const useFetchToChat = (targetChannel) => {
   });
   useEffect(() => {
     client.connect().catch(console.error);
+
     client.on("message", (channel, tags, message, self) => {
       tags.username = tags["display-name"];
+      if (spamers.has(tags["display-name"]))
+        spamers.set(
+          tags["display-name"],
+          spamers.get(tags["display-name"]) + 1
+        );
+      else spamers.set(tags["display-name"], 1);
 
-      setChatStats({ ...chatStats, messages: chatStats.messages + 2 });
+      let maxMessagesNum = 0;
+      let maxUserName = "";
+      for (let [key, value] of spamers.entries()) {
+        if (value > maxMessagesNum) {
+          maxMessagesNum = value;
+          maxUserName = key;
+        }
+      }
+
+      if (message.toLowerCase().includes(`@${targetChannel}`)) {
+        setChatStats((chatStats) => ({
+          ...chatStats,
+          streamerMention: chatStats.streamerMention + 1,
+        }));
+      }
+
+      setChatStats((chatStats) => ({
+        ...chatStats,
+        messages: chatStats.messages + 1,
+      }));
+
+      setChatStats((chatStats) => ({
+        ...chatStats,
+        chatters: spamers.size,
+      }));
+
+      setChatStats((chatStats) => ({
+        ...chatStats,
+        topSpamer: maxUserName,
+      }));
+
+      setChatStats((chatStats) => ({
+        ...chatStats,
+        topSpamerMessages: maxMessagesNum,
+      }));
 
       setChatMesseges((chatMessages) => [
         ...chatMessages,
@@ -37,11 +82,17 @@ const useFetchToChat = (targetChannel) => {
     });
 
     client.on("ban", (channel, username, reason, userstate) => {
-      setChatStats({ ...chatStats, bans: chatStats.bans + 1 });
+      ssetChatStats((chatStats) => ({
+        ...chatStats,
+        bans: chatStats.bans + 1,
+      }));
     });
 
     client.on("timeout", (channel, username, reason, duration, userstate) => {
-      setChatStats({ ...chatStats, to: chatStats.to + 1 });
+      setChatStats((chatStats) => ({
+        ...chatStats,
+        to: chatStats.to + 1,
+      }));
     });
 
     client.on("connected", (address, port) => {
@@ -63,14 +114,20 @@ const useFetchToChat = (targetChannel) => {
     client.on(
       "subscription",
       (channel, username, method, message, userstate) => {
-        setChatStats({ ...chatStats, subs: chatStats.subs + 1 });
+        setChatStats((chatStats) => ({
+          ...chatStats,
+          subs: chatStats.subs + 1,
+        }));
       }
     );
 
     client.on(
       "subgift",
       (channel, username, streakMonths, recipient, methods, userstate) => {
-        setChatStats({ ...chatStats, subGift: chatStats.subGift + 1 });
+        setChatStats((chatStats) => ({
+          ...chatStats,
+          subGift: chatStats.subGift + 1,
+        }));
       }
     );
 
@@ -78,17 +135,12 @@ const useFetchToChat = (targetChannel) => {
       "resub",
       (channel, username, months, message, userstate, methods) => {
         // Do your stuff.
-        setChatStats({ ...chatStats, resub: chatStats.resub + 1 });
+        setChatStats((chatStats) => ({
+          ...chatStats,
+          resub: chatStats.resub + 1,
+        }));
       }
     );
-
-    client.on("mods", (channel, mods) => {
-      setChatStats({ ...chatStats, mods: mods.length });
-    });
-
-    client.on("vips", (channel, vips) => {
-      setChatStats({ ...chatStats, vips: vips.length });
-    });
 
     return () => {
       client.removeAllListeners();
