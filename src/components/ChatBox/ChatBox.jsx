@@ -9,29 +9,33 @@ import SideBar from "../SideBar/SideBar";
 import ChatStatBox from "../ChatStatBox/ChatStatBox";
 
 const ChatBox = ({ globalbadges, targetChannel, globalEmotes, removeCard }) => {
+  //auto scroll
   const bottomRef = useRef(null);
-  const [chatboxSetting, setChatboxSettings] = useState(defaultChatBoxSetting);
   const [isAutoScrolling, setAutoScrlling] = useState(true);
-  const [emotes, setEmotes] = useState([]);
-
-  const [isStatsBoxOpen, setisStatsBoxOpen] = useState(false);
-
+  //settings - not working yet - to do later
+  const [chatboxSetting, setChatboxSettings] = useState(defaultChatBoxSetting);
+  //Channel emotes and badges
   const [badgesSet, setBadges] = useState([]);
-  const [ChatMessages, ChatStats, loadingState] = useFetchToChat(targetChannel);
+  const [emotes, setEmotes] = useState([]);
   const channelEmotes = useFetchToChannelEmotes(targetChannel);
+  //Stats box
+  const [isStatsBoxOpen, setisStatsBoxOpen] = useState(false);
+  //connect to chat
+  const [ChatMessages, ChatStats, loadingState] = useFetchToChat(targetChannel);
 
-
-  useEffect(() => {
-    setAutoScrlling(true);
-  }, [isStatsBoxOpen]);
-  useEffect(() => {
-    setEmotes(filtrEmotes(channelEmotes, globalEmotes, chatboxSetting));
-  }, [channelEmotes, globalEmotes, chatboxSetting]);
-
+  //Channel emotes
   useEffect(() => {
     setBadges(globalbadges);
   }, [globalbadges]);
 
+  //auto scroll
+  useEffect(() => {
+    setAutoScrlling(true);
+  }, [isStatsBoxOpen]);
+
+  useEffect(() => {
+    setEmotes(filtrEmotes(channelEmotes, globalEmotes, chatboxSetting));
+  }, [channelEmotes, globalEmotes, chatboxSetting]);
   const onWheel = (e) => {
     if (e.nativeEvent.wheelDelta > 0) {
       setAutoScrlling(false);

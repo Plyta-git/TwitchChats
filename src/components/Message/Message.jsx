@@ -8,7 +8,9 @@ const Message = ({
   badgesSet: { badge_sets },
   emotes,
 }) => {
+  //text to emotes
   message = useReplaceEmote(message, emotes, ttvEmotes);
+
   return (
     <Wrapper color={color}>
       {badges

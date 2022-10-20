@@ -15,11 +15,14 @@ const Wrapper = styled.div`
 `;
 
 const App = () => {
+  //load global badges
   const [globalbadges, globalBadgesError, globalBadgesLoading] =
     useFetchToEmotes();
+  //set 2 deafult channels
   const [channels, setChannels] = useState(["sodapoppin", "xqc"]);
   const [newChannel, setNewChannel] = useState("");
 
+  //creating new boxchat
   async function handleSubmit(e) {
     e.preventDefault();
     if (channels.some((channel) => channel === newChannel)) {
@@ -34,6 +37,7 @@ const App = () => {
     setNewChannel(e.target.value.toLowerCase());
   }
 
+  //Remove chat box
   const removeCard = (id) => {
     const newChannels = channels.filter((name) => {
       return name != id;

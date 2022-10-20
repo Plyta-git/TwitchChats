@@ -1,4 +1,4 @@
-import { Wrapper, SwitchBox } from "./Styled";
+import { Wrapper } from "./Styled";
 
 const ChatStatBox = ({
   ChatStats: {
@@ -13,20 +13,19 @@ const ChatStatBox = ({
     topSpamerMessages,
     streamerMention,
   },
-  setChatboxSettings,
 }) => {
   return (
     <Wrapper>
-      <div>messages: {messages}</div>
+      <div>Messages: {messages}</div>
       <div>Timeouts: {to}</div>
       <div>Bans: {bans}</div>
       <div>Subs: {subs}</div>
-      <div>subGift: {subGift}</div>
-      <div>resub: {resub}</div>
-      <div>chatters: {chatters}</div>
-      <div>topSpamer: {topSpamer}</div>
-      <div>topSpamerMessages: {topSpamerMessages}</div>
-      <div>streamerMention: {streamerMention}</div>
+      <div>SubGifts: {subGift}</div>
+      <div>ReSubs: {resub}</div>
+      <div>Chatters: {chatters}</div>
+      <div>Top spamer: {topSpamer}</div>
+      <div>Top spamer messages: {topSpamerMessages}</div>
+      <div>Streamer mention: {streamerMention}</div>
     </Wrapper>
   );
 };
