@@ -82,7 +82,7 @@ const useFetchToChat = (targetChannel) => {
     });
 
     client.on("ban", (channel, username, reason, userstate) => {
-      ssetChatStats((chatStats) => ({
+      setChatStats((chatStats) => ({
         ...chatStats,
         bans: chatStats.bans + 1,
       }));
