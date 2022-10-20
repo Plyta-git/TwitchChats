@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/twitchchats/static/js/main.8e4e682c.js",
+    "index.html": "/twitchchats/index.html",
+    "main.8e4e682c.js.map": "/twitchchats/static/js/main.8e4e682c.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.8e4e682c.js"
+  ]
+}
