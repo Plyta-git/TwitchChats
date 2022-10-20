@@ -1,6 +1,6 @@
 {
   "name": "twitch-chat",
-  "homepage": "https://plyta-git.github.io/twitchchats/",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
