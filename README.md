@@ -1,6 +1,6 @@
 ## https://comfy-druid-b660b3.netlify.app/
 Project created to learn React
 
->React
->JS
+>React, 
+>JS, 
 >Styled components
