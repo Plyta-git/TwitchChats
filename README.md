@@ -9,3 +9,5 @@ Suports emotes from:
 >React, 
 >JS, 
 >Styled components
+
+Works with any Twitch.tv channel
